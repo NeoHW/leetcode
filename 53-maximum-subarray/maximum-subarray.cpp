@@ -6,7 +6,7 @@ public:
         int currMax = 0;
 
         for (int c : nums) {
-            // we only need to compare currMax vs next single element 
+            // we only need to compare (currMax + next) vs next single element 
             currMax = max(currMax + c, c);
             maxSoFar = max(maxSoFar, currMax);
         }
