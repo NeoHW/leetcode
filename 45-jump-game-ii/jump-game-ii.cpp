@@ -2,18 +2,21 @@ class Solution {
 public:
     int jump(vector<int>& nums) {
         int n = nums.size();
-        // furthest track furthest index we can reach from current index
-        // end indicates end of current jump range
-        int jumps = 0, furthest = 0, end = 0;
+        int ans = 0;
+        int l = 0, r = 0;
 
-        for (int i = 0; i < n - 1; i++) {
-            furthest = max(furthest, i + nums[i]);
-            if (i == end) {
-                jumps++;
-                end = furthest;
+        while (r < n - 1) {
+            int furthest = 0;
+            // find the furthest we can go in the window from l to r
+            for (int i = l; i <= r; i++) {
+                furthest = max(furthest, i + nums[i]);
             }
+            // move the window range
+            l = r+1;
+            r = furthest;
+            ans++;
         }
 
-        return jumps;
+        return ans;
     }
 };
