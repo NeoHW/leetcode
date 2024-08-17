@@ -3,6 +3,19 @@ public:
     int maxSubArray(vector<int>& nums) {
         // kadane algorithm
         int maxSoFar = INT_MIN;
+        int currMax = 0;
+
+        for (int c : nums) {
+            // we only need to compare currMax vs next single element 
+            currMax = max(currMax + c, c);
+            maxSoFar = max(maxSoFar, currMax);
+        }
+
+        return maxSoFar;
+        
+        
+        /*
+        int maxSoFar = INT_MIN;
         int maxEndingHere = 0;
 
         for (int i = 0; i < nums.size(); i++) {
@@ -14,5 +27,6 @@ public:
         }
 
         return maxSoFar;
+        */
     }
 };
