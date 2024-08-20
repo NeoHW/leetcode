@@ -7,15 +7,16 @@ public:
         if (nums.size() == 0) {
             return 0;
         }
-        vector<int> memo(nums.size()+1);
-        memo[0] = 0;
-        memo[1] = nums[0];
 
-        for (int i = 1 ; i < nums.size(); i++) {
-            int val = nums[i];
-            memo[i+1] = max(memo[i-1] + val, memo[i]);
+        int prev1 = 0;
+        int prev2 = 0;
+        // [prev2, prev1, n , n+1, ...]
+
+        for (int num : nums) {
+            int temp = max(prev2 + num, prev1);
+            prev2 = prev1;
+            prev1 = temp;
         }
-
-        return memo[nums.size()];
+        return prev1;
     }
 };
