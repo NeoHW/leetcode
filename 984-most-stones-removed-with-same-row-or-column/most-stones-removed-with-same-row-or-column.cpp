@@ -1,44 +1,50 @@
 class Solution {
 public:
     int removeStones(vector<vector<int>>& stones) {
-        // for each cluster of stones, number of stones that can be removed is 
-        // number of stones in that cluster - 1 (as we cant remove the last stone)
-        // therefore, we can remove : total num stones - num of clusters
-
+        // find number of CCs using UDFS
         int n = stones.size();
-        vector<vector<int>> AL(n);
+        UnionFind uf(n);
 
-        // we store the index of stones instead of storing the stone pair
         for (int i = 0; i < n; i++) {
             for (int j = i+1; j < n; j++) {
-                // Connect stones that share the same row or column
                 if (stones[i][0] == stones[j][0] || stones[i][1] == stones[j][1]) {
-                    AL[i].push_back(j);
-                    AL[j].push_back(i);
+                    uf.unionNodes(i,j);
                 }
             }
         }
-
-        int clusters = 0;
-        vector<bool> visited(n,false);
-
-        for (int i = 0; i < n; i++) {
-            if (!visited[i]) {
-                dfs(AL, visited, i);
-                clusters++;
-            }
-        }
-
-        return n - clusters;
+        
+        return n - uf.count;
     }
 
 private:
-    void dfs(vector<vector<int>>& AL, vector<bool>& visited, int currStone) {
-        visited[currStone] = true;
-        for (auto neighbour : AL[currStone]) {
-            if (!visited[neighbour]) {
-                dfs(AL, visited, neighbour);
-            }
+    class UnionFind {
+    public:
+        int count; // count number of Connected components
+        vector<int> parent; // array to keep track of each node's parent
+
+        UnionFind(int n) {
+            count = n;
+            parent.resize(n, -1); // initialise all parent's to -1 (itself)
         }
-    }
+
+        int findRoot(int node) {
+            if (parent[node] == -1) {
+                return node;
+            }
+            return parent[node] = findRoot(parent[node]); // directly assign root node to parent of each node
+        }
+
+        void unionNodes(int n1, int n2) {
+            int root1 = findRoot(n1);
+            int root2 = findRoot(n2);
+
+            if (root1 == root2) {
+                return; // already same component, do nothing
+            }
+
+            // merge components, reduce count of CCs
+            count--;
+            parent[root1] = root2;
+        }
+    };
 };
