@@ -18,5 +18,6 @@ class Solution:
     def canFinish(self, piles:List[int], h:int, k:int) -> bool:
         total_hours = 0
         for p in piles:
-            total_hours += (p + k -1 ) // k  # to round up the division
+            # total_hours += (p + k -1 ) // k  # to round up the division
+            total_hours += math.ceil(p / k)
         return total_hours <= h
