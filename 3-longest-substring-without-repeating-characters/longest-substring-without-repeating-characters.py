@@ -1,22 +1,19 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        hm = defaultdict(int)
-        l = 0
+        hs = set()
+        l,r = 0,0
         ans = 0
 
-        for r in range(len(s)):
-            hm[s[r]] += 1
-            have_duplicate = False
-
-            for v in hm.values(): # 26 operations max, O(1)
-                if v > 1:
-                    have_duplicate = True
-            
-            if not have_duplicate:
+        while r < len(s):
+            if s[r] not in hs:
+                hs.add(s[r])
                 substring_length = r - l + 1
                 ans = max(ans, substring_length)
-            else:
-                hm[s[l]] -= 1
+                r += 1
+                continue
+
+            while (s[r] in hs) and (l < r):
+                hs.remove(s[l])
                 l += 1
 
         return ans
