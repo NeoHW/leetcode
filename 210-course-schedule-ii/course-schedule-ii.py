@@ -13,7 +13,7 @@ class Solution:
         
         # adding in nodes with in_degree of 0
         q = deque()
-        for i in range(numCourses):
+        for i in range(numCourses): # cannot iterate through defaultdict as the keys with 0 count wont be present
             if in_degree[i] == 0:
                 q.append(i)
         
