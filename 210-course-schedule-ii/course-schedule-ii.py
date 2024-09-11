@@ -1,29 +1,31 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        AL = {i : [] for i in range(numCourses)}
-        inDegree = {i : 0 for i in range(numCourses)}
+        # topological sort using khan's algo
+        AL = defaultdict(list)
+        in_degree = defaultdict(int)
+        visited = set()
+        res = []
 
-        q = deque()
-        path = []
-
-        for course, prereq in prerequisites:
-            AL[prereq].append(course)
-            inDegree[course] += 1
+        # set up AL & indegree
+        for curr, prereq in prerequisites:
+            AL[prereq].append(curr)
+            in_degree[curr] += 1
         
-        for k,v in inDegree.items():
-            if v == 0:
-                q.append(k)
-
-        count = 0
+        # adding in nodes with in_degree of 0
+        q = deque()
+        for i in range(numCourses):
+            if in_degree[i] == 0:
+                q.append(i)
+        
+        
+        # topological sort
         while q:
-            curr = q.popleft()
-            path.append(curr)
-            count += 1
+            node = q.pop()
+            res.append(node)
 
-            for neighbour in AL[curr]:
-                inDegree[neighbour] -= 1
-
-                if inDegree[neighbour] == 0:
+            for neighbour in AL[node]:
+                in_degree[neighbour] -= 1
+                if in_degree[neighbour] == 0 and neighbour not in visited:
                     q.append(neighbour)
         
-        return path if count == numCourses else []
+        return res if len(res) == numCourses else []
