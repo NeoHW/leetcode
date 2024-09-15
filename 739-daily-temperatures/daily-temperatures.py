@@ -5,16 +5,16 @@ class Solution:
         stack = []
         res = [0] * n
 
-        for index, temp in enumerate(temperatures):
+        for index, currTemp in enumerate(temperatures):
             if not stack:
-                stack.append((temp, index))
+                stack.append(index)
                 continue
             
             # pop out those in stack which are lower temp then curr: means found a warmer temp
-            while stack and stack[-1][0] < temp:
-                _, prevIndex = stack.pop()
+            while stack and temperatures[stack[-1]] < currTemp:
+                prevIndex = stack.pop()
                 res[prevIndex] = index - prevIndex
             
-            stack.append((temp,index))
+            stack.append(index)
         
         return res
