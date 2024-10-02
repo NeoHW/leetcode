@@ -6,19 +6,24 @@ public:
         vector<int> ans(n);
 
         for (int i = 0; i < n; i++) {
-            pq.push({-1 * arr[i], i}); // min heap
+            pq.push({-arr[i], i}); // min heap
         }
 
-        int prev = -1;
+        int prev_value = INT_MIN;
         int rank = 0;
+
         while (!pq.empty()) {
             auto p = pq.top();
-            if (p.first != prev) {
-                rank++;
-            }
-            ans[p.second] = rank;
-            prev = p.first;
             pq.pop();
+            int value = -p.first;
+            int index = p.second;
+
+            if (value != prev_value) {
+                rank++;
+                prev_value = value;
+            }
+
+            ans[index] = rank;
         }
 
         return ans;
