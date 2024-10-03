@@ -2,30 +2,21 @@ class Solution {
 public:
     vector<int> arrayRankTransform(vector<int>& arr) {
         int n = arr.size();
-        priority_queue<pair<int,int>> pq; // max heap
-        vector<int> ans(n);
+        map<int, vector<int>> numToIndices; // store rank of each number in arr
 
         for (int i = 0; i < n; i++) {
-            pq.push({-arr[i], i}); // min heap
+            numToIndices[arr[i]].push_back(i);
         }
-
-        int prev_value = INT_MIN;
-        int rank = 0;
-
-        while (!pq.empty()) {
-            auto p = pq.top();
-            pq.pop();
-            int value = -p.first;
-            int index = p.second;
-
-            if (value != prev_value) {
-                rank++;
-                prev_value = value;
+        
+        int rank = 1;
+        
+        for (auto& pair : numToIndices) {
+            for (int index : pair.second) {
+                arr[index] = rank;
             }
-
-            ans[index] = rank;
+            rank++;
         }
 
-        return ans;
+        return arr;
     }
 };
