@@ -7,27 +7,16 @@ class Solution:
         if len(parts1) >= len(parts2):
             parts1, parts2 = parts2, parts1
 
-        if len(parts1) == 1:
-            return parts1[0] == parts2[0] or parts1[0] == parts2[-1]
-        
-        # 2 pointers for both sentences
-        l1, r1 = 0, len(parts1)-1
-        l2, r2 = 0, len(parts2)-1
+        start, end1, end2 = 0, len(parts1) - 1, len(parts2) - 1
 
-        while l1 <= r1:
-            if parts1[l1] != parts2[l2] and parts1[r1] != parts2[r2]:
-                return False
-            elif parts1[l1] == parts2[l2] and parts1[r1] == parts2[r2]:
-                l1 += 1
-                l2 += 1
-                r1 -= 1
-                r2 -= 1
-                continue
-            elif parts1[l1] == parts2[l2]:
-                l1 += 1
-                l2 += 1
-            else:
-                r1 -= 1
-                r2 -= 1
+        # Find maximum words matching from the beginning
+        while start < len(parts1) and parts1[start] == parts2[start]:
+            start += 1
         
-        return True
+        # Find maximum words matching in the end
+        while end1 >= 0 and parts1[end1] == parts2[end2]:
+            end1 -= 1
+            end2 -= 1
+        
+        # means all words in smaller part found in larger part in order
+        return end1 < start
