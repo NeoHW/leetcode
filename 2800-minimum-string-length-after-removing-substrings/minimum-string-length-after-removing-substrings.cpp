@@ -1,7 +1,7 @@
 class Solution {
 public:
     int minLength(string sentence) {
-        // use a stack , similar to matching paranthesis
+        // use a stack , similar to matching parenthesis
         std::stack<char> s;
 
         for (char c : sentence) {
