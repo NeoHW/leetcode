@@ -10,7 +10,7 @@ class Solution:
 
         for i in range(n):
             dp[i][i] = 1 # every letter itself is a palindrome
-            for j in range(n):
+            for j in range(i):
                 # same letter AND (only one letter in middle or middle is palindrome)
                 if s[j] == s[i] and (i-j <= 2 or dp[j+1][i-1]):
                     dp[j][i] = 1
