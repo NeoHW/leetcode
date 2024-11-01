@@ -15,4 +15,6 @@ class Solution:
             else:
                 l = mid + 1
 
+        # when loop ends, l moved just past the possible values of the square root, meaning sqrt is somewhere below l
+        # since r was last set to a value that was <= sqrt(x), we return r to get the cloest int approximation of sqrt(x) rounded down
         return round(r)
