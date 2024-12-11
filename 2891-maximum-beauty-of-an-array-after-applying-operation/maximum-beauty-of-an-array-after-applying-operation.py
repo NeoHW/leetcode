@@ -1,14 +1,24 @@
 class Solution:
     def maximumBeauty(self, nums: List[int], k: int) -> int:
-        nums.sort()
+        # line sweep algorithm
 
-        # find the longest subarray in range (i,j) that  A[j] - A[i] ≤ 2 * k.
-        left = 0
-        max_window = 0
+        if len(nums) == 1:
+            return 1
+        
+        max_value = max(nums)
+        count = [0] * (max_value + 1)
 
-        for right in range(len(nums)):
-            while nums[right] - nums[left] > 2 * k:
-                left += 1
-            max_window = max(max_window, right - left + 1)
+        # Increment at the start of the range
+        for num in nums:
+            count[max(0, num - k)] += 1 # Increment at the start of the range
+            if num + k + 1 <= max_value:
+                count[num + k + 1] -= 1 # Decrement after the range
+            
+        max_beauty = 0
+        current_sum = 0
 
-        return max_window
+        for val in count:
+            current_sum += val
+            max_beauty = max(max_beauty, current_sum)
+
+        return max_beauty
