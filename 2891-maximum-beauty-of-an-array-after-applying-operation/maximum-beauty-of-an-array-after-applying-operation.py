@@ -2,7 +2,7 @@ class Solution:
     def maximumBeauty(self, nums: List[int], k: int) -> int:
         nums.sort()
 
-        # find the longest subarray in range (i,j) that 
+        # find the longest subarray in range (i,j) that  A[j] - A[i] ≤ 2 * k.
         left = 0
         max_window = 0
 
