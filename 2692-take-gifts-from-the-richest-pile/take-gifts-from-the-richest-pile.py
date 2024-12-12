@@ -1,10 +1,9 @@
 class Solution:
     def pickGifts(self, gifts: List[int], k: int) -> int:
-        pq = []
-        for gift in gifts:
-            heapq.heappush(pq, -gift)
+        pq = [-gift for gift in gifts]
+        heapq.heapify(pq)
         
-        for i in range(k):
+        for _ in range(k):
             num = -heapq.heappop(pq)
             heapq.heappush(pq, -int(sqrt(num)))
         
