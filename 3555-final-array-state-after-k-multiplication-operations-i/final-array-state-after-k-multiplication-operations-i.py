@@ -1,17 +1,11 @@
 class Solution:
     def getFinalState(self, nums: List[int], k: int, multiplier: int) -> List[int]:
-        pq = []
-        for i, num in enumerate(nums):
-            heapq.heappush(pq, (num, i))
-        
-        for _ in range(k):
-            num, i = heapq.heappop(pq)
-            num *= multiplier
-            heapq.heappush(pq, (num, i))
-        
-        res = [-1] * len(nums)
+        pq = [(val,i) for i,val in enumerate(nums)]
+        heapify(pq)
 
-        for num, i in pq:
-            res[i] = num
+        for _ in range(k):
+            _, i = heapq.heappop(pq)
+            nums[i] *= multiplier
+            heapq.heappush(pq, (nums[i], i))
         
-        return res
+        return nums
