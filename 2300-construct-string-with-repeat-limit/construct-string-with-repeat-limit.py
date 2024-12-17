@@ -1,11 +1,8 @@
 class Solution:
     def repeatLimitedString(self, s: str, repeatLimit: int) -> str:
-        hm = Counter(s)
-        pq = []
+        pq = [(-ord(c), count) for c, count in Counter(s).items()]
+        heapq.heapify(pq)
         res = []
-
-        for char, count in hm.items():
-            heapq.heappush(pq, (-ord(char), count)) # max heap of char
 
         while pq:
             c_ascii, count = heapq.heappop(pq)
@@ -30,4 +27,4 @@ class Solution:
             
                 heapq.heappush(pq, (c_ascii, count))
 
-        return ''.join(res)
+        return "".join(res)
