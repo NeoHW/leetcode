@@ -3,11 +3,10 @@ class Solution:
         # monotonic stack of indices
         stack = deque()
 
-        for i in range(len(prices)):
+        for i, curr_price in enumerate(prices):
             # iterate through stack to apply discount where applicable
-            while stack and prices[stack[-1]] >= prices[i]:
-                prices[stack[-1]] -= prices[i]
-                stack.pop()
+            while stack and prices[stack[-1]] >= curr_price:
+                prices[stack.pop()] -= curr_price
             
             # add current index to stack
             stack.append(i)
