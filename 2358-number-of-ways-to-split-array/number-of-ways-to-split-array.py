@@ -1,0 +1,21 @@
+class Solution:
+    def waysToSplitArray(self, nums: List[int]) -> int:
+        n = len(nums)
+        prefix_sum = [0] * n
+        postfix_sum = [0] * n
+
+        prefix_sum[0] = nums[0]
+
+        for i in range(1, n):
+            prefix_sum[i] = prefix_sum[i-1] + nums[i]
+        
+        for i in range(n-2, -1, -1):
+            postfix_sum[i] = postfix_sum[i+1] + nums[i+1]
+        
+        valid_splits = 0
+
+        for i in range(n-1):
+            if prefix_sum[i] >= postfix_sum[i]:
+                valid_splits += 1
+        
+        return valid_splits
