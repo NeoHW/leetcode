@@ -22,10 +22,12 @@ class Solution:
                 idx2 += 1
         
         # add remaining nums in either array
-        for i in range(idx1, len1):
-            res.append([nums1[i][0], nums1[i][1]])
-
-        for i in range(idx2, len2):
-            res.append([nums2[i][0], nums2[i][1]])
+        while idx1 < len1:
+            res.append(nums1[idx1])
+            idx1 += 1
+   
+        while idx2 < len2:
+            res.append(nums2[idx2])
+            idx2 += 1
         
         return res
