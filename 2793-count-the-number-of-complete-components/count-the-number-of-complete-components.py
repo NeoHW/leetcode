@@ -31,9 +31,15 @@ class UnionFind:
         p2 = self.find(num2)
     
         if p1 != p2:
-            self.parents[p2] = p1
-            self.size[p1] += self.size[p2]
-            self.edge_count[p1] += self.edge_count[p2] + 1
+            # merge smaller component by size
+            if self.size[p1] > self.size[p2]:
+                self.parents[p2] = p1
+                self.size[p1] += self.size[p2]
+                self.edge_count[p1] += self.edge_count[p2] + 1
+            else:
+                self.parents[p1] = p2
+                self.size[p2] += self.size[p1]
+                self.edge_count[p2] += self.edge_count[p1] + 1
             self.count -= 1
         else:
             self.edge_count[p1] += 1
