@@ -8,10 +8,11 @@ class Solution:
         for num in answers:
             hm[num] += 1
 
-        # if 3 rabbits say there are 1 other rabbits with the same colour, means there must be >1 colour, as max can be 2 per colour.
         for k,v in hm.items():
-            # find total possible rabbits for that key - number of rabbits which answered (which is value)
-            group_size = k+1
+            group_size = k+1 # as the rabbit does not include himself in the count
+            
+            # If more rabbits gave the same answer than the group can hold, we need multiple groups
+            # So we divide v by group_size to find how many such full (or partially full) groups we need
             num_groups = ceil(v / group_size)
             res += num_groups * group_size
         
