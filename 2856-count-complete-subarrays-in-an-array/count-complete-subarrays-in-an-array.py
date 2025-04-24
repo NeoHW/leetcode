@@ -10,13 +10,11 @@ class Solution:
 
         for r in range(n):
             hm[nums[r]] += 1
-            curr_distinct = len(hm)
-            while curr_distinct >= distinct and l <= r:
+            while len(hm) >= distinct and l <= r:
                 res += (n - r)
                 hm[nums[l]] -= 1
                 if hm[nums[l]] == 0:
                     del hm[nums[l]]
                 l += 1
-                curr_distinct = len(hm)
         
         return res
