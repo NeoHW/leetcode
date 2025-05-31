@@ -1,7 +1,6 @@
 class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        int n = strs.size();
         unordered_map<string, vector<string>> hm;
         vector<vector<string>> res;
 
@@ -14,7 +13,7 @@ public:
         for (auto& pair : hm) {
             res.emplace_back(std::move(pair.second));
         }
-        
+
         return res;
     }
 };
