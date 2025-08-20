@@ -5,32 +5,18 @@
 #         self.next = next
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        # for empty lists
-        if len(lists) == 0:
-            return None
+        pq = []
+        k = len(lists)
+        for i in range(k):
+            if lists[i] is not None:
+                heappush(pq, (lists[i].val, i))
         
-        while len(lists) > 1:
-            temp = []
-            for i in range(0, len(lists), 2):
-                list1 = lists[i]
-                list2 = lists[i+1] if i+1 < len(lists) else None
-                temp.append(self.merge(list1,list2))
-            lists = temp
-        
-        return lists[0]
-
-    def merge(self, node1, node2):
-        dummy = curr = ListNode()
-        while node1 and node2:
-            if node1.val < node2.val:
-                curr.next = node1
-                node1 = node1.next
-            else:
-                curr.next = node2
-                node2 = node2.next
+        curr = dummy = ListNode()
+        while pq:
+            (val, idx) = heappop(pq)
+            curr.next = ListNode(val)
             curr = curr.next
-        
-        # in case diff lengths
-        curr.next = node1 or node2
-
+            if lists[idx].next is not None:
+                lists[idx] = lists[idx].next
+                heappush(pq, (lists[idx].val, idx))
         return dummy.next
