@@ -12,7 +12,7 @@ class Solution:
     def shuffle(self) -> List[int]:
         # Fisher–Yates algorithm: swap current element with a random one at or after it
         for i in range(len(self.curr)):
-            j = random.randrange(i, len(self.curr))
+            j = random.randrange(i, len(self.curr)) # it is possible to swap an element with itself!!
             self.curr[i], self.curr[j] = self.curr[j], self.curr[i]
         return self.curr
 
