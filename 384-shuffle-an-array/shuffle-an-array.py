@@ -10,12 +10,10 @@ class Solution:
         
 
     def shuffle(self) -> List[int]:
-        temp = self.curr[:]
-
+        # Fisher–Yates algorithm: swap current element with a random one at or after it
         for i in range(len(self.curr)):
-            idx_to_remove = random.randrange(len(temp))
-            self.curr[i] = temp.pop(idx_to_remove)
-
+            j = random.randrange(i, len(self.curr))
+            self.curr[i], self.curr[j] = self.curr[j], self.curr[i]
         return self.curr
 
 # Your Solution object will be instantiated and called as such:
