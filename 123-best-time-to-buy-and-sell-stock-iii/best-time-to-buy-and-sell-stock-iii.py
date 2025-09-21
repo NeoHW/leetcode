@@ -13,6 +13,4 @@ class Solution:
             buy2  = min(buy2, p - sell1)  # cheapest effective 2nd buy (price - profit1)
             sell2 = max(sell2, p - buy2)  # best total profit finishing 2nd transaction
         
-            print(buy1, sell1, buy2, sell2)
-    
         return sell2
