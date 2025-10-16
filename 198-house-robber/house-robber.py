@@ -5,11 +5,11 @@ class Solution:
 
         if n == 1:
             return nums[0]
-
+        
         prev, curr = nums[0], max(nums[0], nums[1])
         for i in range(2, n):
-            temp = max(nums[i] + prev, curr)
-            prev = curr
-            curr = temp
+            temp = curr
+            curr = max(curr, prev + nums[i])
+            prev = temp
         
         return curr
